@@ -1,0 +1,114 @@
+<?= $this->extend('templates/index'); ?>
+
+<?= $this->section('page-content'); ?>
+
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-4 text-gray-800">Katalog Obat</h1>
+
+    <!-- Search Input -->
+    <div class="mb-4">
+        <input type="text" id="searchInput" class="form-control" placeholder="Cari Nama Obat Disini...">
+    </div>
+
+    <?php if (session()->getFlashdata('error')): ?>
+        <div class="alert alert-error">
+            <span class="icon">❌</span>
+            <?= session()->getFlashdata('error') ?>
+        </div>
+    <?php endif; ?>
+
+    <?php if (session()->getFlashdata('success')): ?>
+        <div class="alert alert-success">
+            <span class="icon">✅</span>
+            <?= session()->getFlashdata('success') ?>
+        </div>
+    <?php endif; ?>
+
+    <!-- Content -->
+    <div class="row" id="medicineContainer">
+        <?php foreach ($medicine_list as $mdlist) : ?>
+            <div class="col-md-4 mb-4 medicine-card">
+                <div class="card" style="width: 100%;">
+                    <img src="<?= base_url('uploads/medicine/' . $mdlist->medicine_pict) ?>" class="card-img-top" alt="..." width="100">
+                    <div class="card-body">
+                        <h5 class="card-title"><b><?= esc($mdlist->name) ?></b></h5>
+                        <p class="card-text">Rp. <?= number_format($mdlist->price, 0, ',', '.') ?></p>
+                        <a href="javascript:void(0)" class="btn btn-primary" onclick='showMedicineDetail({
+    id: <?= $mdlist->id ?>,
+    name: "<?= esc($mdlist->name) ?>",
+    price: <?= $mdlist->price ?>,
+    stock: <?= $mdlist->qty ?>,
+    description: "<?= esc($mdlist->other_data) ?>",
+    image: "<?= $mdlist->medicine_pict ?>",
+    image_url: "<?= base_url('uploads/medicine/' . $mdlist->medicine_pict) ?>"
+})'>Detail</a>
+                    </div>
+                </div>
+            </div>
+        <?php endforeach; ?>
+    </div>
+
+    <!-- Load More Button -->
+    <div class="text-center mt-4">
+        <button id="loadMoreBtn" class="btn btn-secondary">Load More</button>
+        <p id="loader" style="display: none;">Loading...</p>
+        <p id="endMessage" style="display: none;">Semua data sudah ditampilkan.</p>
+    </div>
+
+</div>
+
+<!-- Detail Modal -->
+<div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <form id="addToCartForm" method="post" action="<?= base_url('cart/add') ?>">
+            <?= csrf_field() ?>
+            <input type="hidden" name="medicine_id" id="modalMedicineId">
+            <input type="hidden" name="medicine_name" id="modalMedicineName">
+            <input type="hidden" name="price" id="modalMedicinePriceValue">
+            <input type="hidden" name="medicine_image" id="modalMedicineImageValue">
+            <input type="hidden" id="modalMedicineStockValue">
+
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="detailModalLabel">Detail Obat</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="row">
+                        <!-- Grid Kiri: Gambar -->
+                        <div class="col-md-6 text-center">
+                            <img id="modalImage" src="" class="img-fluid" alt="Gambar Obat">
+                        </div>
+
+                        <!-- Grid Kanan: Info -->
+                        <div class="col-md-6">
+                            <h4 id="modalName"></h4>
+                            <p><strong>Harga:</strong> <span id="modalPrice"></span></p>
+                            <p><strong>Stok:</strong> <span id="modalStock"></span></p>
+                            <p><strong>Deskripsi:</strong></p>
+                            <p id="modalDescription"></p>
+
+                            <div class="form-group mt-3">
+                                <label for="quantity">Jumlah</label>
+                                <input type="number" name="quantity" id="modalQuantity" class="form-control" min="1" value="1" required>
+                                <small id="quantityError" class="text-danger d-none">Jumlah melebihi stok tersedia</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tombol Tambah Keranjang -->
+                <div class="modal-footer justify-content-center">
+                    <button type="submit" class="btn btn-info btn-lg btn-block" id="addToCartBtn">Tambah ke Keranjang</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<?= $this->endSection(); ?>
