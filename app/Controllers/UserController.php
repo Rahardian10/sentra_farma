@@ -791,12 +791,25 @@ class UserController extends BaseController
         // Load view sebagai HTML
         $html = view('user/sales/invoice_pdf', $data);
 
-        // Generate PDF
         $dompdf = new Dompdf();
         $dompdf->loadHtml($html);
         $dompdf->setPaper('A4', 'portrait');
+
+        ob_start();                      // MULAI output buffering
         $dompdf->render();
-        $dompdf->stream('Invoice-' . $order['no_trx'] . '.pdf', ['Attachment' => false]); // Set true untuk auto-download
+        $pdfOutput = $dompdf->output();
+        ob_end_clean();                  // BERSIHKAN buffer (hindari karakter liar)
+
+        return $this->response
+            ->setContentType('application/pdf')
+            ->setHeader('Content-Disposition', 'inline; filename="Invoice-' . $order['no_trx'] . '.pdf"')
+            ->setBody($pdfOutput);
+        // Generate PDF
+        // $dompdf = new Dompdf();
+        // $dompdf->loadHtml($html);
+        // $dompdf->setPaper('A4', 'portrait');
+        // $dompdf->render();
+        // $dompdf->stream('Invoice-' . $order['no_trx'] . '.pdf', ['Attachment' => false]); // Set true untuk auto-download
     }
 
     public function refundinvoicePdf($id)

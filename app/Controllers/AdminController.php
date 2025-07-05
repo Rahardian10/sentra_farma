@@ -94,7 +94,7 @@ class AdminController extends BaseController
         $data['manufactur'] = $Manufactur->findAll();
         $data['md_unit'] = $MedicineUnit->findAll();
         $data['m_subs'] = $MasterSubstance->findAll();
-        return view('admin/medicine_list/Medicine_form', $data);
+        return view('admin/medicine_list/medicine_form', $data);
     }
 
     public function edit($id = 0)
