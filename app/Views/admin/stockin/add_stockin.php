@@ -5,6 +5,22 @@
 <div class="container-fluid">
     <h1 class="h3 mb-4 text-gray-800">Form Transaksi Obat Masuk</h1>
 
+    <!-- Page Heading -->
+    <h1 class="h3 mb-4 text-gray-800">List Obat</h1>
+    <?php if (session()->getFlashdata('error')): ?>
+        <div class="alert alert-error">
+            <span class="icon">❌</span>
+            <?= session()->getFlashdata('error') ?>
+        </div>
+    <?php endif; ?>
+
+    <?php if (session()->getFlashdata('success')): ?>
+        <div class="alert alert-success">
+            <span class="icon">✅</span>
+            <?= session()->getFlashdata('success') ?>
+        </div>
+    <?php endif; ?>
+
     <!-- card -->
     <div class="card">
         <div class="card-body">

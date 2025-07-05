@@ -164,6 +164,26 @@ class AdminController extends BaseController
         $ecatalog = $this->request->getPost('ecatalog');
         $status = $this->request->getPost('status');
 
+        //validasi error
+        $validation = \Config\Services::validation();
+        $rules = [
+            'name' => 'required',
+            'md_category' => 'required',
+            'location' => 'required',
+            'manufactur' => 'required',
+            'md_unit' => 'required',
+            'convertion_value' => 'required|numeric',
+            'substance' => 'required',
+            'price' => 'required|numeric',
+            'status' => 'required',
+        ];
+
+        if (!$this->validate($rules)) {
+            return redirect()->back()
+                ->withInput()
+                ->with('error', implode('<br>', $this->validator->getErrors()));
+        }
+
         // Proses upload gambar jika ada
         $imageFile = $this->request->getFile('md_pict');
         $imagePath = '';
@@ -305,6 +325,25 @@ class AdminController extends BaseController
             $receiver = $this->request->getPost('receiver');
             $date_of_receipt = $this->request->getPost('date_of_receipt');
             $items = $this->request->getPost('items');
+
+            //validasi error
+            $validation = \Config\Services::validation();
+
+            $rules = [
+                'title' => 'required',
+                'supplier' => 'required',
+                'supplier_address' => 'required',
+                'supplier_contact' => 'required',
+                'receiver' => 'required',
+                'date_of_receipt' => 'required',
+                'items' => 'required|is_array'
+            ];
+
+            if (!$this->validate($rules)) {
+                return redirect()->back()
+                    ->withInput()
+                    ->with('error', implode('<br>', $this->validator->getErrors()));
+            }
 
             // Handle Upload Invoice
             $invoiceFile = $this->request->getFile('invoice');
