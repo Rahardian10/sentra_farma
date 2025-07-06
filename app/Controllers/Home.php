@@ -6,8 +6,31 @@ class Home extends BaseController
 {
     public function index(): string
     {
-        return view('web-profile');
+        $db = \Config\Database::connect();
+        $builder = $db->table('medicine_list');
+
+        // Produk populer (pakai harga diskon)
+        $popularProducts = $builder->where('status', 1)
+            ->where('discount_price IS NULL')
+            ->orderBy('updated_at', 'DESC')
+            ->limit(6)
+            ->get()
+            ->getResultArray();
+
+        // Produk terbaru (order by created_at)
+        $newProducts = $db->table('medicine_list')
+            ->where('status', 1)
+            ->orderBy('created_at', 'DESC')
+            ->limit(8)
+            ->get()
+            ->getResultArray();
+
+        return view('web-profile', [
+            'popularProducts' => $popularProducts,
+            'newProducts' => $newProducts,
+        ]);
     }
+
 
     public function dashboard()
     {

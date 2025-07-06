@@ -41,9 +41,10 @@
 
             <div class="container">
                 <div class="d-flex align-items-center justify-content-between">
+                    <img src="<?= base_url(); ?>/logo.png" alt="Logo Sentra Farma" style="height: 40px; margin-right: 10px;">
                     <div class="logo">
                         <div class="site-logo">
-                            <a href="index.html" class="js-logo-clone">Sentra Farma</a>
+                            <a href="<?= base_url(); ?>" class="js-logo-clone">Sentra Farma</a>
                         </div>
                     </div>
                     <!-- <div class="main-nav d-none d-lg-block">
@@ -148,53 +149,32 @@
             <div class="container">
                 <div class="row">
                     <div class="title-section text-center col-12">
-                        <h2 class="text-uppercase">Popular Products</h2>
+                        <h2 class="text-uppercase">Some Products</h2>
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-sm-6 col-lg-4 text-center item mb-4">
-                        <span class="tag">Sale</span>
-                        <img src="<?= base_url(); ?>/webprofile/images/product_01.png" alt="Image">
-                        <h3 class="text-dark"></h3>
-                        <p class="price"><del>95.00</del> &mdash; $55.00</p>
-                    </div>
-                    <div class="col-sm-6 col-lg-4 text-center item mb-4">
-                        <img src="<?= base_url(); ?>/webprofile/images/product_02.png" alt="Image">
-                        <h3 class="text-dark"></h3>
-                        <p class="price">$70.00</p>
-                    </div>
-                    <div class="col-sm-6 col-lg-4 text-center item mb-4">
-                        <img src="<?= base_url(); ?>/webprofile/images/product_03.png" alt="Image">
-                        <h3 class="text-dark"></h3>
-                        <p class="price">$120.00</p>
-                    </div>
+                    <?php foreach ($popularProducts as $med): ?>
+                        <div class="col-sm-6 col-lg-4 text-center item mb-4">
+                            <?php if (!empty($med['discount_price']) && $med['discount_price'] < $med['price']): ?>
+                                <span class="tag">Sale</span>
+                            <?php endif; ?>
 
-                    <div class="col-sm-6 col-lg-4 text-center item mb-4">
-
-                        <img src="<?= base_url(); ?>/webprofile/images/product_04.png" alt="Image">
-                        <h3 class="text-dark"></h3>
-                        <p class="price"><del>45.00</del> &mdash; $20.00</p>
-                    </div>
-                    <div class="col-sm-6 col-lg-4 text-center item mb-4">
-                        <img src="<?= base_url(); ?>/webprofile/images/product_05.png" alt="Image">
-                        <h3 class="text-dark"></h3>
-                        <p class="price">$38.00</p>
-                    </div>
-                    <div class="col-sm-6 col-lg-4 text-center item mb-4">
-                        <span class="tag">Sale</span>
-                        <img src="<?= base_url(); ?>/webprofile/images/product_06.png" alt="Image">
-                        <h3 class="text-dark">Poo Pourri</h3>
-                        <p class="price"><del>$89</del> &mdash; $38.00</p>
-                    </div>
-                </div>
-                <div class="row mt-5">
-                    <!-- <div class="col-12 text-center">
-                        <a href="shop.html" class="btn btn-primary px-4 py-3">View All Products</a>
-                    </div> -->
+                            <img src="<?= base_url('uploads/medicine/' . ($med['medicine_pict'] ?? 'default.png')) ?>" alt="<?= esc($med['name']) ?>" class="img-fluid">
+                            <h3 class="text-dark"><?= esc($med['name']) ?></h3>
+                            <p class="price">
+                                <?php if (!empty($med['discount_price']) && $med['discount_price'] < $med['price']): ?>
+                                    <del>Rp. <?= number_format($med['price'], 2) ?></del> &mdash; Rp. <?= number_format($med['discount_price'], 2) ?>
+                                <?php else: ?>
+                                    Rp. <?= number_format($med['price'], 2) ?>
+                                <?php endif; ?>
+                            </p>
+                        </div>
+                    <?php endforeach; ?>
                 </div>
             </div>
         </div>
+
 
 
         <div class="site-section bg-light">
@@ -207,36 +187,25 @@
                 <div class="row">
                     <div class="col-md-12 block-3 products-wrap">
                         <div class="nonloop-block-3 owl-carousel">
-
-                            <div class="text-center item mb-4">
-                                <img src="<?= base_url(); ?>/webprofile/images/product_03.png" alt="Image">
-                                <h3 class="text-dark"></h3>
-                                <p class="price">$120.00</p>
-                            </div>
-
-                            <div class="text-center item mb-4">
-                                <img src="<?= base_url(); ?>/webprofile/images/product_01.png" alt="Image">
-                                <h3 class="text-dark"></h3>
-                                <p class="price">$120.00</p>
-                            </div>
-
-                            <div class="text-center item mb-4">
-                                <img src="<?= base_url(); ?>/webprofile/images/product_02.png" alt="Image">
-                                <h3 class="text-dark"></h3>
-                                <p class="price">$120.00</p>
-                            </div>
-
-                            <div class="text-center item mb-4">
-                                <img src="<?= base_url(); ?>/webprofile/images/product_04.png" alt="Image">
-                                <h3 class="text-dark"></h3>
-                                <p class="price">$120.00</p>
-                            </div>
-
+                            <?php foreach ($newProducts as $item): ?>
+                                <div class="text-center item mb-4">
+                                    <img src="<?= base_url('uploads/medicine/' . ($item['medicine_pict'] ?? 'default.png')) ?>" alt="<?= esc($item['name']) ?>" class="img-fluid">
+                                    <h3 class="text-dark"><?= esc($item['name']) ?></h3>
+                                    <p class="price">
+                                        <?php if (!empty($item['discount_price']) && $item['discount_price'] < $item['price']): ?>
+                                            <del>Rp. <?= number_format($item['price'], 2) ?></del> &mdash; Rp. <?= number_format($item['discount_price'], 2) ?>
+                                        <?php else: ?>
+                                            Rp. <?= number_format($item['price'], 2) ?>
+                                        <?php endif; ?>
+                                    </p>
+                                </div>
+                            <?php endforeach; ?>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
 
         <div class="site-section">
             <div class="container">
@@ -333,9 +302,9 @@
                         <div class="block-5 mb-5">
                             <h3 class="footer-heading mb-4">Contact Info</h3>
                             <ul class="list-unstyled">
-                                <li class="address">203 Fake St. Mountain View, San Francisco, California, USA</li>
-                                <li class="phone"><a href="tel://23923929210">+2 392 3929 210</a></li>
-                                <li class="email">emailaddress@domain.com</li>
+                                <li class="address">Jl. Teratai Raya No.42, Rancaekek Wetan, Kec. Rancaekek, Kabupaten Bandung, Jawa Barat 40394</li>
+                                <li class="phone"><a href="wa.me/62 81809714520">+62 818-0971-4520</a></li>
+                                <li class="email">erza1681@gmail.com</li>
                             </ul>
                         </div>
 
