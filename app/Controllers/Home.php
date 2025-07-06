@@ -12,7 +12,7 @@ class Home extends BaseController
         // Produk populer (pakai harga diskon)
         $popularProducts = $builder->where('status', 1)
             ->where('discount_price IS NULL')
-            ->orderBy('updated_at', 'DESC')
+            ->orderBy('created_at', 'DESC')
             ->limit(6)
             ->get()
             ->getResultArray();
@@ -21,7 +21,7 @@ class Home extends BaseController
         $newProducts = $db->table('medicine_list')
             ->where('status', 1)
             ->orderBy('created_at', 'DESC')
-            ->limit(8)
+            ->limit(7)
             ->get()
             ->getResultArray();
 
