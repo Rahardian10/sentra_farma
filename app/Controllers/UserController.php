@@ -339,8 +339,10 @@ class UserController extends BaseController
         $modelLog = new \App\Models\LogStatusTrx(); // Tambahkan ini
 
         $noTrx = 'TRX' . date('YmdHis') . rand(100, 999);
-        $totalPrice = $this->request->getPost('grand_total_input');
+        $totalPrice = $this->request->getPost('grand_total_with_ppn_input');
         $shippingCost = $this->request->getPost('shipping_price_input');
+        $ppn = $this->request->getPost('ppn_input');
+        // dd($totalPrice);
 
         $headerData = [
             'no_trx'         => $noTrx,
@@ -355,6 +357,7 @@ class UserController extends BaseController
             'payment_file'   => $paidName,
             'total_price'    => $totalPrice,
             'shipping_cost'  => $shippingCost,
+            'ppn'            => $ppn,
             'status'         => $isAdmin ? 3 : 1, // ✅ status 3 jika admin
             'platform'       => $isAdmin ? 'offline' : 'online', // ✅ disini
             'updated_by'     => $userId,

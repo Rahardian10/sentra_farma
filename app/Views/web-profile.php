@@ -326,6 +326,31 @@
                     </div>
 
                 </div>
+                <!-- WhatsApp Floating Button -->
+                <div id="wa-floating">
+                    <!-- Button Depan -->
+                    <div class="wa-button" onclick="toggleWAWidget()">
+                        <img src="<?= base_url(); ?>/webprofile/images/wa.png" alt="WA Icon">
+                        <span>Hubungi Kami</span>
+                    </div>
+
+                    <!-- Panel Pilihan -->
+                    <div class="wa-panel d-none" id="waPanel">
+                        <div class="wa-header">
+                            <strong>Hello</strong>
+                            <small>How can we help?</small>
+                        </div>
+                        <a href="https://wa.me/6281809714520" class="wa-link" target="_blank">
+                            <img src="<?= base_url(); ?>/webprofile/images/wa.png" alt="WA Icon">
+                            <span>Call Center</span>
+                        </a>
+                        <!-- <a href="https://wa.me/6289876543210" class="wa-link" target="_blank">
+                            <img src="<?= base_url(); ?>/webprofile/images/wa.png" alt="WA Icon">
+                            <span>Pelayanan Transaksi Pemesanan</span>
+                        </a> -->
+                    </div>
+                </div>
+                <!-- WhatsApp Floating Button -->
             </div>
         </footer>
     </div>
@@ -339,6 +364,12 @@
     <script src="<?= base_url(); ?>/webprofile/js/aos.js"></script>
 
     <script src="<?= base_url(); ?>/webprofile/js/main.js"></script>
+    <script>
+        function toggleWAWidget() {
+            const panel = document.getElementById('waPanel');
+            panel.classList.toggle('d-none');
+        }
+    </script>
 
 </body>
 

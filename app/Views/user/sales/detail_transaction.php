@@ -93,6 +93,11 @@
                     <?php endif; ?>
 
                     <tr>
+                        <th>PPN (11%)</th>
+                        <td><strong>Rp <?= number_format($transaction['ppn'], 0, ',', '.') ?></strong></td>
+                    </tr>
+
+                    <tr>
                         <th>Total Harga</th>
                         <td><strong>Rp <?= number_format($transaction['total_price'], 0, ',', '.') ?></strong></td>
                     </tr>

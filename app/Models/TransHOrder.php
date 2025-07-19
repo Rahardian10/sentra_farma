@@ -24,6 +24,7 @@ class TransHOrder extends Model
         'status',
         'platform',
         'shipping_cost',
+        'ppn',
         'created_at',
         'updated_at',
         'updated_by'

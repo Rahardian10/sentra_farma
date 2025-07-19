@@ -25,7 +25,7 @@
     <?php endif; ?>
 
     <?php
-    // Hitung total keranjang lebih awal agar bisa dipakai di form
+    // Hitung total keranjang lebih awal
     $total_co = 0;
     if (!empty($cartItems)) {
         foreach ($cartItems as $item) {
@@ -33,6 +33,10 @@
             $total_co += $subtotal;
         }
     }
+
+    $ppn_percent = 11;
+    $ppn_amount = ($total_co * $ppn_percent) / 100;
+    $grand_total = $total_co + $ppn_amount; // Ongkir akan ditambahkan via JS nantinya
     ?>
 
     <form id="checkoutForm" method="post" action="<?= base_url('checkout/process') ?>" enctype="multipart/form-data">
@@ -123,6 +127,10 @@
                         <!-- Hidden input for total -->
                         <input type="hidden" id="shipping_price_input" name="shipping_price_input" value="0">
                         <input type="hidden" id="grand_total_input" name="grand_total_input" value="<?= $total_co ?>">
+                        <input type="hidden" id="ppn_amount_input" name="ppn_amount" value="<?= $ppn_amount ?>">
+                        <input type="hidden" id="grand_total_input" name="grand_total_input" value="<?= $grand_total ?>">
+                        <input type="hidden" id="ppn_input" name="ppn_input">
+                        <input type="hidden" id="grand_total_with_ppn_input" name="grand_total_with_ppn_input">
 
                         <button type="submit" class="btn btn-success mt-3" id="checkoutBtn">Proses Checkout</button>
                     </div>
@@ -167,10 +175,15 @@
                                             <th id="shippingCost">Rp 0</th>
                                         </tr>
                                         <tr>
-                                            <th colspan="3" class="text-right">Grand Total</th>
-                                            <th id="grandTotal">Rp <?= number_format($total_co, 0, ',', '.') ?></th>
+                                            <th colspan="3" class="text-right">PPN (11%)</th>
+                                            <th id="ppnCost">Rp 0</th>
+                                        </tr>
+                                        <tr>
+                                            <th colspan="3" class="text-right">Grand Total + PPN</th>
+                                            <th id="grandTotalWithPpn">Rp <?= number_format($total_co, 0, ',', '.') ?></th>
                                         </tr>
                                     </tfoot>
+
                                 </table>
                             </div>
                         <?php else : ?>

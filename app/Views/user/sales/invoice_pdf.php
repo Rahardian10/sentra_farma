@@ -3,6 +3,7 @@
 
 <head>
     <title>Invoice - <?= $order['no_trx'] ?></title>
+    <link rel="icon" type="image/png" sizes="32x32" href="<?= base_url('logo.png') ?>">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -82,26 +83,44 @@
     <div class="header">
         <h1>Apotik Sentra Farma</h1>
         <div class="company-info">
-            Jl. Sehat Selalu No. 10, Jakarta<br>
-            Telp: 021-12345678 | Email: info@sentrafarma.co.id
+            Jl. Teratai Raya No.42, Rancaekek Wetan, <br>Kec. Rancaekek, Kabupaten Bandung, Jawa Barat 40394<br>
+            Telp: 0818-0971-4520 | Email: erza1681@gmail.com<br>
+            <?php if ($is_admin): ?>
+                NPWP : 4521.9878.1234.0989
+            <?php endif; ?>
         </div>
     </div>
 
     <div class="section-title">Informasi Transaksi</div>
 
     <div class="row">
-        <div class="col">
-            <p><strong>Nomor Transaksi:</strong> <?= $order['no_trx'] ?></p>
-            <p><strong>Tanggal Transaksi:</strong> <?= date('d M Y H:i', strtotime($order['created_at'])) ?></p>
-            <p><strong>Status Transaksi:</strong> <?= esc($status) ?></p>
-            <p><strong>Username:</strong> <?= esc($order['username']) ?></p>
-        </div>
-        <div class="col">
-            <p><strong>Nama Penerima:</strong> <?= esc($order['recipient_name']) ?></p>
-            <p><strong>Nomor Telepon:</strong> <?= esc($order['phone_number']) ?></p>
-            <p><strong>Alamat:</strong> <?= esc($order['address']) ?></p>
-        </div>
+        <?php if ($is_admin): ?>
+            <div class="col">
+                <p><strong>Nomor Transaksi:</strong> <?= esc($order['no_trx']) ?></p>
+                <p><strong>Tanggal Transaksi:</strong> <?= date('d M Y H:i', strtotime($order['created_at'])) ?></p>
+                <p><strong>Jenis Pembayaran:</strong> <?= esc($order['payment_type'] ?? 'Tunai') ?></p>
+                <p><strong>Petugas:</strong> <?= esc($order['username']) ?></p>
+            </div>
+            <div class="col">
+                <p><strong>Customer:</strong> Umum</p>
+                <p><strong>Nomor Telepon:</strong> <?= esc($order['phone_number']) ?></p>
+                <p><strong>Alamat:</strong> <?= esc($order['address']) ?></p>
+            </div>
+        <?php else: ?>
+            <div class="col">
+                <p><strong>Nomor Transaksi:</strong> <?= esc($order['no_trx']) ?></p>
+                <p><strong>Tanggal Transaksi:</strong> <?= date('d M Y H:i', strtotime($order['created_at'])) ?></p>
+                <p><strong>Status Transaksi:</strong> <?= esc($status) ?></p>
+                <p><strong>Username:</strong> <?= esc($order['username']) ?></p>
+            </div>
+            <div class="col">
+                <p><strong>Nama Penerima:</strong> <?= esc($order['recipient_name']) ?></p>
+                <p><strong>Nomor Telepon:</strong> <?= esc($order['phone_number']) ?></p>
+                <p><strong>Alamat:</strong> <?= esc($order['address']) ?></p>
+            </div>
+        <?php endif; ?>
     </div>
+
 
     <p><strong>Catatan:</strong> <?= esc($order['notes']) ?: '-' ?></p>
 
@@ -129,16 +148,18 @@
     </table>
 
     <div class="total">
-        <p><strong>Biaya Ongkir:</strong> Rp <?= number_format($order['shipping_cost'], 0, ',', '.') ?></p>
-        <p><strong>Total Harga:</strong> Rp <?= number_format($order['total_price'], 0, ',', '.') ?></p>
-
         <?php if ($is_admin): ?>
             <p><strong>Jumlah yang Dibayarkan:</strong> Rp <?= number_format($cash['paid_amount'] ?? 0, 0, ',', '.') ?></p>
             <p><strong>Kembalian:</strong> Rp <?= number_format($cash['change_amount'] ?? 0, 0, ',', '.') ?></p>
+        <?php else: ?>
+            <p><strong>Biaya Ongkir:</strong> Rp <?= number_format($order['shipping_cost'], 0, ',', '.') ?></p>
         <?php endif; ?>
+        <p><strong>PPN 11%:</strong> Rp <?= number_format($order['ppn'], 0, ',', '.') ?></p>
+        <p><strong>Total Harga:</strong> Rp <?= number_format($order['total_price'], 0, ',', '.') ?></p>
     </div>
 
     <div class="footer">
+        Barang yang sudah dibeli TIDAK BISA DITUKAR / DIKEMBALIKAN<br>
         Terima kasih telah berbelanja di Apotik Sentra Farma. Semoga lekas sehat!
     </div>
 

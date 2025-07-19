@@ -606,23 +606,48 @@
             var $areaSelect = $('#area_co');
             var $shippingCost = $('#shippingCost');
             var $grandTotal = $('#grandTotal');
+            var $grandTotalWithPpn = $('#grandTotalWithPpn');
+            var $ppnCost = $('#ppnCost');
             var $cartTotal = $('#cartTotal');
 
             var cartTotalVal = parseRupiah($cartTotal.text());
+            var ppn = Math.round(cartTotalVal * 0.11); // PPN 11%
+
+            $ppnCost.text('Rp ' + ppn.toLocaleString('id-ID'));
 
             $areaSelect.on('change', function() {
                 var shippingPrice = parseInt($(this).find('option:selected').data('price')) || 0;
-                var newGrandTotal = cartTotalVal + shippingPrice;
+                var grandTotal = cartTotalVal + shippingPrice;
+                var grandTotalWithPpn = grandTotal + ppn;
 
                 $shippingCost.text('Rp ' + shippingPrice.toLocaleString('id-ID'));
-                $grandTotal.text('Rp ' + newGrandTotal.toLocaleString('id-ID'));
+                $grandTotal.text('Rp ' + grandTotal.toLocaleString('id-ID'));
+                $grandTotalWithPpn.text('Rp ' + grandTotalWithPpn.toLocaleString('id-ID'));
 
                 $('#shipping_price_input').val(shippingPrice);
-                $('#grand_total_input').val(newGrandTotal);
+                $('#grand_total_input').val(grandTotal);
+                $('#ppn_input').val(ppn);
+                $('#grand_total_with_ppn_input').val(grandTotalWithPpn);
             });
+
+            // Script untuk admin (karena tidak pakai area dropdown)
+            if ($('#area_co').length === 0) {
+                const cartTotal = parseInt($('#cartTotal').text().replace(/[^0-9]/g, '')) || 0;
+                const ppn = Math.round(cartTotal * 0.11);
+                const grandTotal = cartTotal + ppn;
+
+                $('#ppnCost').text('Rp ' + ppn.toLocaleString('id-ID'));
+                $('#grandTotalWithPpn').text('Rp ' + grandTotal.toLocaleString('id-ID'));
+
+                $('#shipping_price_input').val(0); // Admin = tidak ada ongkir
+                $('#ppn_input').val(ppn);
+                $('#grand_total_with_ppn_input').val(grandTotal);
+            }
+
 
             $areaSelect.trigger('change');
         });
+
 
         //Filter pencarian menu transaksi
         $(document).ready(function() {
