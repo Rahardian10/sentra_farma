@@ -717,7 +717,7 @@
         //validasi halaman checkout admin untuk pengurangan kembalian
         $(document).ready(function() {
             <?php if (in_groups('Admin')): ?>
-                const grandTotal = parseInt($('#grand_total_input').val());
+                const grandTotal = parseInt($('#grand_total_with_ppn_input').val()) || 0;
 
                 function formatNumber(number) {
                     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
@@ -728,37 +728,38 @@
                 }
 
                 function validatePayment(amount) {
-                    if (amount >= grandTotal) {
-                        $('#checkoutBtn').prop('disabled', false);
-                    } else {
-                        $('#checkoutBtn').prop('disabled', true);
-                    }
+                    $('#checkoutBtn').prop('disabled', amount < grandTotal);
                 }
 
                 $('#paid_display').on('input', function() {
                     let input = $(this).val().replace(/[^\d]/g, '');
                     let numericValue = parseInt(input) || 0;
-                    $(this).val(formatNumber(numericValue));
-                    $('#paid_amount').val(numericValue);
 
+                    // Format input tampilan bayar
+                    $(this).val(formatNumber(numericValue));
+                    $('#paid_amount').val(numericValue); // Simpan ke hidden input
+
+                    // Hitung kembalian
                     let change = numericValue - grandTotal;
 
+                    // Update tampilan dan input kembalian
                     $('#change_amount_display').val(
                         new Intl.NumberFormat('id-ID', {
                             style: 'currency',
                             currency: 'IDR'
                         }).format(change >= 0 ? change : 0)
                     );
-
                     $('#change_amount').val(change >= 0 ? change : 0);
+
+                    // Validasi
                     validatePayment(numericValue);
                 });
 
-
-                // Inisialisasi awal: disable jika belum ada input
+                // Inisialisasi awal
                 validatePayment(0);
             <?php endif; ?>
         });
+
 
         //JS untuk grafik dashboard Admin
         <?php if (isset($grafikPendapatan)): ?>
