@@ -1150,6 +1150,9 @@ class AdminController extends BaseController
         // Siapkan file writer Excel
         $writer = WriterEntityFactory::createXLSXWriter();
         $filename = 'medicine_list_export.xlsx';
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header("Content-Disposition: attachment; filename=\"$filename\"");
+        header('Cache-Control: max-age=0');
         $writer->openToBrowser($filename);
 
         // Buat header kolom
@@ -1232,6 +1235,9 @@ class AdminController extends BaseController
             ]));
         }
 
+        if (ob_get_contents()) ob_end_clean();
+        ob_start();
         $writer->close();
+        ob_end_flush();
     }
 }
