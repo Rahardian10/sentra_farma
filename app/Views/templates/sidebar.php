@@ -119,17 +119,44 @@
     </li>
 
     <?php if (in_groups('Admin')): ?>
+        <!-- Kondisi untuk menampilkan count atau total angka dari notifikasi menu List Pesanan -->
+        <?php
+        $db = \Config\Database::connect();
+        $pendingOrders = $db->table('trans_h_order')
+            ->whereIn('status', [1, 2])
+            ->countAllResults();
+        ?>
         <li class="nav-item <?= (current_url() == base_url('order') || strpos(current_url(), base_url('order/detail')) !== false) ? 'active' : ''; ?>">
-            <a class="nav-link" href="<?= base_url('order'); ?>">
-                <i class="fa fa-archive"></i>
-                <span>List Pesanan</span></a>
+            <a class="nav-link d-flex justify-content-between align-items-center" href="<?= base_url('order'); ?>">
+                <div>
+                    <i class="fa fa-archive"></i>
+                    <span>List Pesanan</span>
+                </div>
+                <?php if ($pendingOrders > 0): ?>
+                    <span class="badge badge-light ml-2"><?= $pendingOrders; ?></span>
+                <?php endif; ?>
+            </a>
         </li>
 
+        <!-- Kondisi untuk menampilkan count atau total angka dari notifikasi menu refund -->
+        <?php
+        $db = \Config\Database::connect();
+        $pendingRefunds = $db->table('trans_h_refund')
+            ->where('status', 1)
+            ->countAllResults();
+        ?>
         <li class="nav-item <?= (current_url() == base_url('refund') || strpos(current_url(), base_url('edit/refund')) !== false) ? 'active' : ''; ?>">
-            <a class="nav-link" href="<?= base_url('refund'); ?>">
-                <i class="fa fa-retweet"></i>
-                <span>Persetujuan Refund</span></a>
+            <a class="nav-link d-flex justify-content-between align-items-center" href="<?= base_url('refund'); ?>">
+                <div>
+                    <i class="fa fa-retweet"></i>
+                    <span>Persetujuan Refund</span>
+                </div>
+                <?php if ($pendingRefunds > 0): ?>
+                    <span class="badge badge-warning ml-2"><?= $pendingRefunds; ?></span>
+                <?php endif; ?>
+            </a>
         </li>
+
     <?php endif; ?>
 
     <?php if (in_groups('User')): ?>
