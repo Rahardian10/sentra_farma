@@ -27,6 +27,7 @@
         </div>
         <div class="card-body">
             <div class="text-end mb-3" style="text-align: right;">
+                <a href="<?= base_url('medicinelist/export-excel'); ?>" class="btn btn-success">Export Excel</a>
                 <a href="<?= base_url('add/medicine'); ?>" class="btn btn-primary">Tambah Data</a>
             </div>
             <div class="table-responsive">

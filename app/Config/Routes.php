@@ -16,6 +16,7 @@ $routes->group('', ['filter' => ['login', 'role:Admin']], function ($routes) {
     $routes->get('add/medicine', 'AdminController::add');
     $routes->post('save/medicine', 'AdminController::save');
     $routes->post('save/medicine/(:num)', 'AdminController::save/$1');
+    $routes->get('medicinelist/export-excel', 'AdminController::exportExcel');
 
     // Trx Medicine Stockin
     $routes->get('medicinestockin', 'AdminController::stockin');

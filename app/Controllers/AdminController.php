@@ -25,6 +25,8 @@ use App\Models\Bank;
 use App\Models\StatusRefund;
 use App\Models\LogStatusRefund;
 use App\Models\TransDApprovalRefund;
+use Box\Spout\Writer\Common\Creator\WriterEntityFactory;
+use Faker\Provider\Medical;
 use Myth\Auth\Models\UserModel;
 
 class AdminController extends BaseController
@@ -1134,5 +1136,102 @@ class AdminController extends BaseController
         ]);
 
         return redirect()->to('/refund')->with('success', 'Status refund berhasil diperbarui.');
+    }
+
+    public function exportExcel()
+    {
+        $medicineModel = new MedicineList();
+        $substanceModel = new MedicineSubstance();
+        $db = \Config\Database::connect();
+
+        // Ambil semua data obat
+        $medicines = $medicineModel->findAll();
+
+        // Siapkan file writer Excel
+        $writer = WriterEntityFactory::createXLSXWriter();
+        $filename = 'medicine_list_export.xlsx';
+        $writer->openToBrowser($filename);
+
+        // Buat header kolom
+        $headers = [
+            'Code',
+            'Name',
+            'Status',
+            'Kategori',
+            'Pabrikan',
+            'Lokasi',
+            'Satuan',
+            'Konversi',
+            'Obat Kronis',
+            'Vaksin',
+            'Cover BPJS',
+            'Gambar',
+            'Data Lain',
+            'Harga',
+            'Diskon',
+            'E-Catalog',
+            'Created At',
+            'Updated At',
+            'Updated By',
+            'Zat Aktif (Pisah Koma)'
+        ];
+
+        $writer->addRow(WriterEntityFactory::createRowFromArray($headers));
+
+        foreach ($medicines as $med) {
+            // Ambil nama kategori
+            $categoryName = $db->table('medicine_category')->select('name')->where('id', $med['md_category'])->get()->getRow('name');
+
+            // Ambil nama pabrikan
+            $manufacturName = $db->table('manufactur')->select('name')->where('id', $med['manufactur'])->get()->getRow('name');
+
+            // Ambil nama lokasi
+            $locationName = $db->table('medicine_location')->select('name')->where('id', $med['location'])->get()->getRow('name');
+
+            // Ambil nama satuan
+            $unitName = $db->table('medicine_unit')->select('name')->where('id', $med['md_unit'])->get()->getRow('name');
+
+            // Ambil zat aktif (nama dari master_substance)
+            $substances = $substanceModel
+                ->select('master_substance_id')
+                ->where('medicine_id', $med['id'])
+                ->findAll();
+
+            $substanceNames = [];
+            foreach ($substances as $sub) {
+                $subName = $db->table('master_substance')->select('name')->where('id', $sub['master_substance_id'])->get()->getRow('name');
+                if ($subName) {
+                    $substanceNames[] = $subName;
+                }
+            }
+
+            $substanceList = implode(', ', $substanceNames);
+
+            // Tambahkan baris ke Excel
+            $writer->addRow(WriterEntityFactory::createRowFromArray([
+                $med['code'],
+                $med['name'],
+                $med['status'] == 1 ? 'Aktif' : 'Tidak Aktif',
+                $categoryName ?? '-',
+                $manufacturName ?? '-',
+                $locationName ?? '-',
+                $unitName ?? '-',
+                $med['convertion_value'],
+                $med['md_chronic'],
+                $med['vaccine'],
+                $med['cover_bpjs'],
+                $med['medicine_pict'],
+                $med['other_data'],
+                $med['price'],
+                $med['discount_price'],
+                $med['ecatalog'],
+                $med['created_at'],
+                $med['updated_at'],
+                $med['updated_by'],
+                $substanceList
+            ]));
+        }
+
+        $writer->close();
     }
 }
