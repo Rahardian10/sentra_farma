@@ -7,6 +7,7 @@ use CodeIgniter\Router\RouteCollection;
  */
 $routes->get('/', 'Home::index');
 $routes->get('/dashboard', 'Home::dashboard', ['filter' => 'login']);
+$routes->get('activate-account/(:segment)', 'Home::activateAccount/$1');
 
 $routes->group('', ['filter' => ['login', 'role:Admin']], function ($routes) {
     // Master Medicine

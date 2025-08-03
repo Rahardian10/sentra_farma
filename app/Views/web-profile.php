@@ -95,6 +95,7 @@
                         <div class="site-block-cover-content text-center">
                             <h2 class="sub-title">OBAT TERPERCAYA, STOK TERBARU SETIAP HARI</h2>
                             <h1>SELAMAT DATANG DI SENTRA FARMA</h1>
+                            <p><strong>Sentra Farma hanya melayani konsumen di wilayah Kabupaten Bandung</strong></p>
                             <p>
                                 <a href="<?= base_url('login'); ?>" class="btn btn-primary px-5 py-3">BELANJA SEKARANG</a>
                             </p>
@@ -144,7 +145,13 @@
                 </div>
             </div>
         </div>
-
+        <div class="site-section bg-light">
+            <div class="container text-center">
+                <h2 class="text-uppercase">Wilayah Layanan Kami</h2>
+                <p>Sentra Farma melayani pengiriman dan pembelian obat hanya untuk area <strong>Kabupaten Bandung</strong> seperti:</p>
+                <p><em>Rancaekek, Majalaya, Ciparay, Soreang, Banjaran, Cicalengka, dan sekitarnya.</em></p>
+            </div>
+        </div>
         <div class="site-section">
             <div class="container">
                 <div class="row">
@@ -217,34 +224,29 @@
                 <div class="row">
                     <div class="col-md-12 block-3 products-wrap">
                         <div class="nonloop-block-3 no-direction owl-carousel">
-
                             <div class="testimony">
                                 <blockquote>
                                     <img src="<?= base_url(); ?>/webprofile/images/person_1.jpg" alt="Image" class="img-fluid w-25 mb-4 rounded-circle">
-                                    <p>&ldquo;Pelayanannya sangat cepat dan ramah. Obat yang saya cari tersedia lengkap dan langsung dikirim ke rumah. Sangat membantu saat saya butuh obat urgent.&rdquo;</p>
+                                    <p>&ldquo;Sentra Farma sangat membantu saat anak saya sakit dan butuh obat cepat. Kurirnya ramah dan pengiriman tepat waktu ke rumah saya di Rancaekek.&rdquo;</p>
                                 </blockquote>
-
-                                <p>&mdash; Kelly Holmes</p>
+                                <p>&mdash; Rina Kartikasari, Rancaekek</p>
                             </div>
 
                             <div class="testimony">
                                 <blockquote>
                                     <img src="<?= base_url(); ?>/webprofile/images/person_2.jpg" alt="Image" class="img-fluid w-25 mb-4 rounded-circle">
-                                    <p>&ldquo;Saya rutin beli suplemen dari Sentra Farma. Kualitas produk terjamin, dan pengiriman selalu tepat waktu. Terima kasih sudah bikin belanja obat jadi mudah!.&rdquo;</p>
+                                    <p>&ldquo;Belanja obat jadi lebih praktis lewat Sentra Farma. Saya tidak perlu jauh-jauh ke apotek. Sangat cocok untuk warga Majalaya!&rdquo;</p>
                                 </blockquote>
-
-                                <p>&mdash; Rebecca Morando</p>
+                                <p>&mdash; Agus Permana, Majalaya</p>
                             </div>
 
                             <div class="testimony">
                                 <blockquote>
                                     <img src="<?= base_url(); ?>/webprofile/images/person_3.jpg" alt="Image" class="img-fluid w-25 mb-4 rounded-circle">
-                                    <p>&ldquo;Website-nya mudah digunakan dan proses pembelian sangat praktis. Saya juga suka karena terdapat informasi ringkasan dan riwayat pembelian.&rdquo;</p>
+                                    <p>&ldquo;Suplemen dan obat yang saya butuhkan selalu tersedia. Transaksi mudah dan CS-nya responsif. Terima kasih Sentra Farma.&rdquo;</p>
                                 </blockquote>
-
-                                <p>&mdash; Lucas Gallone</p>
+                                <p>&mdash; Dewi Lestari, Soreang</p>
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -284,7 +286,8 @@
 
                         <div class="block-7">
                             <h3 class="footer-heading mb-4">About Us</h3>
-                            <p>Sentra Farma adalah apotek terpercaya yang menyediakan berbagai kebutuhan obat-obatan, suplemen, dan produk kesehatan. Kami berkomitmen menghadirkan pelayanan cepat, produk berkualitas, dan pengalaman belanja yang aman untuk semua pelanggan.</p>
+                            <p>Sentra Farma adalah apotek terpercaya yang berfokus melayani masyarakat di wilayah <strong>Kabupaten Bandung</strong>.
+                                Kami menyediakan berbagai kebutuhan obat-obatan, suplemen, dan produk kesehatan dengan pelayanan cepat dan aman.</p>
                         </div>
 
                     </div>
@@ -310,21 +313,6 @@
 
 
                     </div>
-                </div>
-                <div class="row pt-5 mt-5 text-center">
-                    <div class="col-md-12">
-                        <p>
-                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                            Copyright &copy;
-                            <script>
-                                document.write(new Date().getFullYear());
-                            </script> All rights reserved | This template is made
-                            with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank"
-                                class="text-primary">Colorlib</a>
-                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                        </p>
-                    </div>
-
                 </div>
                 <!-- WhatsApp Floating Button -->
                 <div id="wa-floating">

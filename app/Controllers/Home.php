@@ -2,6 +2,8 @@
 
 namespace App\Controllers;
 
+use Myth\Auth\Models\UserModel;
+
 class Home extends BaseController
 {
     public function index(): string
@@ -11,7 +13,7 @@ class Home extends BaseController
 
         // Produk populer (pakai harga diskon)
         $popularProducts = $builder->where('status', 1)
-            ->where('discount_price IS NULL')
+            // ->where('discount_price IS NULL')
             ->orderBy('created_at', 'DESC')
             ->limit(6)
             ->get()
@@ -31,6 +33,22 @@ class Home extends BaseController
         ]);
     }
 
+    public function activateAccount($token)
+    {
+        $users = new UserModel();
+        $user = $users->where('activate_hash', $token)->first();
+
+        if (!$user) {
+            return redirect()->to('/login')->with('error', 'Token aktivasi tidak valid atau sudah digunakan.');
+        }
+
+        $users->update($user['id'], [
+            'activate_hash' => null,
+            'active' => 1,
+        ]);
+
+        return redirect()->to('/login')->with('message', 'Akun berhasil diaktivasi. Silakan login.');
+    }
 
     public function dashboard()
     {
