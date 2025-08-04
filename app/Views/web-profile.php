@@ -226,7 +226,7 @@
                         <div class="nonloop-block-3 no-direction owl-carousel">
                             <div class="testimony">
                                 <blockquote>
-                                    <img src="<?= base_url(); ?>/webprofile/images/person_1.jpg" alt="Image" class="img-fluid w-25 mb-4 rounded-circle">
+                                    <img src="<?= base_url(); ?>/webprofile/images/wm 1.jpeg" alt="Image" class="img-fluid w-25 mb-4 rounded-circle">
                                     <p>&ldquo;Sentra Farma sangat membantu saat anak saya sakit dan butuh obat cepat. Kurirnya ramah dan pengiriman tepat waktu ke rumah saya di Rancaekek.&rdquo;</p>
                                 </blockquote>
                                 <p>&mdash; Rina Kartikasari, Rancaekek</p>
@@ -234,7 +234,7 @@
 
                             <div class="testimony">
                                 <blockquote>
-                                    <img src="<?= base_url(); ?>/webprofile/images/person_2.jpg" alt="Image" class="img-fluid w-25 mb-4 rounded-circle">
+                                    <img src="<?= base_url(); ?>/webprofile/images/m1.jpeg" alt="Image" class="img-fluid w-25 mb-4 rounded-circle">
                                     <p>&ldquo;Belanja obat jadi lebih praktis lewat Sentra Farma. Saya tidak perlu jauh-jauh ke apotek. Sangat cocok untuk warga Majalaya!&rdquo;</p>
                                 </blockquote>
                                 <p>&mdash; Agus Permana, Majalaya</p>
@@ -242,7 +242,7 @@
 
                             <div class="testimony">
                                 <blockquote>
-                                    <img src="<?= base_url(); ?>/webprofile/images/person_3.jpg" alt="Image" class="img-fluid w-25 mb-4 rounded-circle">
+                                    <img src="<?= base_url(); ?>/webprofile/images/wm 2.jpeg" alt="Image" class="img-fluid w-25 mb-4 rounded-circle">
                                     <p>&ldquo;Suplemen dan obat yang saya butuhkan selalu tersedia. Transaksi mudah dan CS-nya responsif. Terima kasih Sentra Farma.&rdquo;</p>
                                 </blockquote>
                                 <p>&mdash; Dewi Lestari, Soreang</p>
